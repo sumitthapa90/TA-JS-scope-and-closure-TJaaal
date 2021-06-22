@@ -45,7 +45,14 @@ log(); // return undefinde (can't be called twice)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
 
 ```js
-function once(cb) {}
+function once(cb, ...rest) {
+  let isCalledc = false;
+  return function () {
+    if (isCalled === false) {
+      cb(...rest);
+    }
+  };
+}
 
 // TEST
 let log = once(console.log, "Message one", "Message Two");
@@ -57,13 +64,13 @@ log(); // return undefinde (can't be called twice)
 
 ```js
 function nTimes(cb, times, ...rest) {
-  let numberOfTimesCalled = 0;
+  let numberOfTimes = 0;
   return function () {
-    if (numberOfTimesCalled >= times) {
-      alert(`You can't call this function more than ${times} times!`);
+    if (numberOfTimes >= times) {
+      alert(`You cant not call this function more than ${times}`);
     } else {
       cb(...rest);
-      numberofTimesCalled += 1;
+      numberOfTimes = numberOfTimes + 1;
     }
   };
 }
